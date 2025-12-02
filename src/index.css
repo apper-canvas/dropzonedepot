@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'react-toastify/dist/ReactToastify.css';
+
+/* Toast overrides */
+.Toastify__toast-container {
+  @apply top-4 right-4;
+}
+
+.Toastify__toast {
+  @apply rounded-lg shadow-lg;
+}
+
+.Toastify__toast--success {
+  @apply bg-success text-white;
+}
+
+.Toastify__toast--error {
+  @apply bg-error text-white;
+}
+
+.Toastify__toast--warning {
+  @apply bg-warning text-white;
+}
+
+.Toastify__toast--info {
+  @apply bg-info text-white;
+}
+
+.Toastify__progress-bar {
+  @apply bg-white bg-opacity-25;
+}
+
+/* Custom animations */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-progress {
+  background: linear-gradient(90deg, #2563EB, #3B82F6, #2563EB);
+  background-size: 200% 100%;
+  animation: gradientShift 2s ease-in-out infinite;
+}
+
+.drag-over {
+  @apply border-primary bg-blue-50 transform scale-102;
+  transition: all 0.2s ease-out;
+}
+
+.file-card-hover {
+  @apply transform -translate-y-0.5 shadow-lg;
+  transition: all 0.2s ease-out;
+}
