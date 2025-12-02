@@ -9,15 +9,15 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
-      colors: {
-        primary: '#2563EB',
+colors: {
+        primary: '#DC2626',
         secondary: '#64748B',
-        accent: '#10B981',
+        accent: '#F59E0B',
         surface: '#F8FAFC',
         success: '#10B981',
         warning: '#F59E0B',
         error: '#EF4444',
-        info: '#3B82F6',
+        info: '#DC2626',
       },
       animation: {
         'pulse-scale': 'pulseScale 0.6s ease-out',

@@ -41,13 +41,13 @@
 }
 
 .gradient-progress {
-  background: linear-gradient(90deg, #2563EB, #3B82F6, #2563EB);
+  background: linear-gradient(90deg, #DC2626, #EF4444, #DC2626);
   background-size: 200% 100%;
   animation: gradientShift 2s ease-in-out infinite;
 }
 
 .drag-over {
-@apply border-primary bg-blue-50 transform scale-105;
+@apply border-primary bg-red-50 transform scale-105;
   transition: all 0.2s ease-out;
 }
 
