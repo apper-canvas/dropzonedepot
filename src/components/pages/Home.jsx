@@ -1,6 +1,6 @@
-import { Suspense } from "react";
-import FileUploadManager from "@/components/organisms/FileUploadManager";
+import React, { Suspense } from "react";
 import Loading from "@/components/ui/Loading";
+import FileUploadManager from "@/components/organisms/FileUploadManager";
 
 const Home = () => {
   return (

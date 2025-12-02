@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import ApperFileFieldComponent from "@/components/atoms/ApperFileFieldComponent";
+import { useAuth } from "@/layouts/Root";
+import { toast } from "react-toastify";
+import fileUploadService from "@/services/api/fileUploadService";
 import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
-import DropZone from "@/components/molecules/DropZone";
-import FileCard from "@/components/molecules/FileCard";
 import Loading from "@/components/ui/Loading";
 import ErrorView from "@/components/ui/ErrorView";
 import Empty from "@/components/ui/Empty";
-import fileUploadService from "@/services/api/fileUploadService";
-import { toast } from "react-toastify";
+import Button from "@/components/atoms/Button";
+import DropZone from "@/components/molecules/DropZone";
+import FileCard from "@/components/molecules/FileCard";
 
 const FileUploadManager = () => {
   const [files, setFiles] = useState([]);
@@ -15,6 +18,9 @@ const FileUploadManager = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [uploadingAll, setUploadingAll] = useState(false);
+
+  const { user } = useSelector((state) => state.user);
+  const { logout } = useAuth();
 
   useEffect(() => {
     loadData();
@@ -190,22 +196,64 @@ const FileUploadManager = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-blue-600 rounded-2xl shadow-lg mb-4">
-            <ApperIcon name="Upload" className="w-8 h-8 text-white" />
+        {/* Header with User Info and Logout */}
+        <div className="flex justify-between items-center mb-8">
+          <div className="text-center flex-1">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-blue-600 rounded-2xl shadow-lg mb-4">
+              <ApperIcon name="Upload" className="w-8 h-8 text-white" />
+            </div>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+              <span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+                DropZone
+              </span>
+            </h1>
+            <p className="text-secondary text-lg">
+              Upload files quickly and see upload status clearly
+            </p>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            <span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
-              DropZone
-            </span>
-          </h1>
-          <p className="text-secondary text-lg">
-            Upload files quickly and see upload status clearly
-          </p>
+          
+          {/* User Info and Logout */}
+          {user && (
+            <div className="flex items-center gap-4">
+              <div className="text-right">
+                <div className="text-sm font-medium text-gray-900">
+                  {user.firstName} {user.lastName}
+                </div>
+                <div className="text-xs text-gray-500">{user.emailAddress}</div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={logout}
+                className="text-gray-600 hover:text-gray-900"
+              >
+                <ApperIcon name="LogOut" className="w-4 h-4 mr-1" />
+                Logout
+              </Button>
+            </div>
+          )}
         </div>
 
-        {/* Upload Zone */}
+        {/* File Upload Component with ApperFileFieldComponent */}
+        <div className="mb-8">
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">File Upload</h3>
+            <ApperFileFieldComponent
+              elementId="file_upload_field"
+              config={{
+                fieldName: 'file_c',
+                fieldKey: 'file_c',
+                tableName: 'file_upload_c',
+                apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+                apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY,
+                existingFiles: files.filter(f => f.file).map(f => f.file) || [],
+                fileCount: files.filter(f => f.file).length || 0
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Legacy Upload Zone (keeping for compatibility) */}
         <div className="mb-8">
           <DropZone
             onFilesSelected={handleFilesSelected}
