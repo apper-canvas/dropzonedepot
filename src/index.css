@@ -47,7 +47,7 @@
 }
 
 .drag-over {
-  @apply border-primary bg-blue-50 transform scale-102;
+@apply border-primary bg-blue-50 transform scale-105;
   transition: all 0.2s ease-out;
 }
 
